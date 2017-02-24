@@ -1,3 +1,18 @@
 .author-name {
-	font-size: 8px;
+	font-style: italic;
+	font-weight: bold;
+	margin-left: -10px;
 }
+
+.author-date {
+	font-style: italic;
+}
+
+.chat-bubble {
+	background-color: lightblue;
+	border-radius: 6px;
+	padding: 3px 15px;
+ }
+
+
+

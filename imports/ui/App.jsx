@@ -8,7 +8,7 @@ import Chat from './Chat.jsx';
 export default class App extends Component {
 	render() {
 		return (
-			<div className="container">
+			<div className="container-fluid">
 				<div className="jumbotron">
 					<h5>{"Let's Chat"}</h5>
 
