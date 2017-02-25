@@ -15,4 +15,7 @@
  }
 
 
-
+.anchor-bottom {
+	position: fixed;
+	bottom: 0;
+}
