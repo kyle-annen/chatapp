@@ -19,3 +19,28 @@
 	position: fixed;
 	bottom: 0;
 }
+
+.login-link-and-dropdown-list {
+	margin-top: 12px;
+	margin-left: 8px;
+	text-decoration: none;
+
+}
+
+#login-dropdown-list {
+	position: fixed;
+	left: 20px;
+	top: 20px;
+}
+
+#chat-jumbo {
+	overflow-y: scroll;
+	overflow-x: hidden;
+	height: 400px;
+}
+
+.chat-image {
+	height: 30px;
+	width: 30px;
+	border-radius: 100%;
+}

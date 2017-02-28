@@ -1,8 +1,13 @@
 import React, { Component, PropTypes } from 'react';
 
+import { Meteor } from 'meteor/meteor';
+
 export default class Chat extends Component {
 
-	
+	componentDidUpdate() {
+		const chatbox = document.getElementById("chat-jumbo");
+		chatbox.scrollTop = chatbox.scrollTopMax;
+	}
 
 	render() {
 
@@ -11,6 +16,12 @@ export default class Chat extends Component {
 		const min = createDate.getMinutes();
 		const formatMin = (min < 10 ? '0':'') + min;
 		const timeStamp = hours + ':' + formatMin;
+		const author = this.props.chat.author;
+		const user = Meteor.users.findOne({_id: author});
+		const userImage = user.services.google.picture;
+		const userName = "  " + user.services.google.given_name;
+		
+		
 
 		return (
 			<div className="row">
@@ -19,11 +30,15 @@ export default class Chat extends Component {
 				</div>
 				<div className="col-sm-2">
 					<span className="author-name float-sm-left">
-						{this.props.chat.author}
+						<img
+							src={userImage}
+							className="chat-image" />
+						{userName}
 					</span>
 					<span className="author-date float-sm-right">
-						{ timeStamp }
+						{timeStamp}
 					</span>
+
 				</div>
 			</div>
 
