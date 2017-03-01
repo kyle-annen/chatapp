@@ -4,6 +4,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { Meteor } from 'meteor/meteor';
 
 export default class Chat extends Component {
+	
 	constructor(props) {
 		super(props);
 		const audio = new Audio('https://www.freesound.org/people/HerbertBoland/sounds/33369/download/33369__herbertboland__mouthpop.wav');
@@ -29,8 +30,6 @@ export default class Chat extends Component {
 		}
 			
 	}
-
-	
 
 	render() {
 
