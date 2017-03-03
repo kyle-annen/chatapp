@@ -23,6 +23,7 @@ export default class App extends Component {
 		this.handleSubmit = this.handleSubmit.bind(this);
     this.toggleRoomModal = this.toggleRoomModal.bind(this);
     this.createRoom = this.createRoom.bind(this);
+    this.selectRoom = this.selectRoom.bind(this);
 	}
 
 	handleSubmit(event) {
@@ -71,7 +72,12 @@ export default class App extends Component {
 
 		//clear the room name input box
 		document.getElementById('room-input').value = '';
-		
+	}
+
+	selectRoom(roomID) {
+		this.setState({
+			activeRoom: roomID,
+		});
 	}
 
 	render() {
@@ -86,7 +92,11 @@ export default class App extends Component {
 
 				{
 					this.props.rooms.map((room)=> (
-						<Button key={room._id} >{room.room}</Button>
+						<Button 
+							key={room._id} 
+							onClick={() => this.selectRoom(room._id)}>
+							{room.room}
+						</Button>
 					))
 				}
 
