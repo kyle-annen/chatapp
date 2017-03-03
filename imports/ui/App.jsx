@@ -8,7 +8,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 import { Chats } from '../api/chats.js';
 import { Rooms } from '../api/rooms.js';
 
-import Chat from './Chat.jsx';
+import RoomContainer from './Room.jsx';
 import NavigationBar from './NavigationBar.jsx';
 import AddRoomModal from './AddRoomModal.jsx';
 
@@ -18,7 +18,7 @@ export default class App extends Component {
 		this.state = {
 			loggedIn: false,
 			roomModal: false,
-			activeRoom: null
+			activeRoom: "ZNesGD6vpAPnk4c2A"
 		}
 		this.handleSubmit = this.handleSubmit.bind(this);
     this.toggleRoomModal = this.toggleRoomModal.bind(this);
@@ -38,6 +38,7 @@ export default class App extends Component {
 			Chats.insert({
 				text: chatText,
 				author: authorID,
+				room: this.state.activeRoom,
 				createdAt: new Date(),
 			});
 
@@ -47,7 +48,13 @@ export default class App extends Component {
 		}
 	}
 
-	createRoom() {
+	toggleRoomModal() {
+    this.setState({
+      roomModal: !this.state.roomModal
+    });
+  }
+
+  createRoom() {
 		//get the current user
 		const userID = Meteor.user()._id;
 		const roomName = document.getElementById('room-input').value;
@@ -62,20 +69,10 @@ export default class App extends Component {
 			roomModal: false
 		});
 
-		
 		//clear the room name input box
 		document.getElementById('room-input').value = '';
 		
 	}
-
-	toggleRoomModal() {
-    this.setState({
-      roomModal: !this.state.roomModal
-    });
-  }
-
-
-
 
 	render() {
 		return (
@@ -87,22 +84,15 @@ export default class App extends Component {
 					toggleRoomModal={this.toggleRoomModal} 
 					createRoom={this.createRoom}/>
 
-					{
-						this.props.rooms.map((room)=> (
-							<Button>{room.room}</Button>
-						))
-					}
+				{
+					this.props.rooms.map((room)=> (
+						<Button key={room._id} >{room.room}</Button>
+					))
+				}
+
+				<RoomContainer activeRoom={this.state.activeRoom} />	
 
 				
-
-				
-				<div className="jumbotron" id="chat-jumbo">
-
-					{this.props.chats.map((chat) => (
-						<Chat key={chat._id} chat={chat} />
-					))}
-
-				</div>
 				<form>
 					<div className="form-group">
 						<label for="chat-input">
@@ -123,12 +113,12 @@ export default class App extends Component {
 };
 
 App.propTypes = {
-	chats: PropTypes.array.isRequired,
 	rooms: PropTypes.array.isRequired,
 };
 
 export default createContainer(() => {
 	let userID; 
+
 	if (Meteor.user() == null || Meteor.user() == "undefined") {
 		userID = "";
 	} else {
@@ -136,7 +126,6 @@ export default createContainer(() => {
 	}
 
 	return {
-		chats: Chats.find({}).fetch(),
 		rooms: Rooms.find( { users: userID } ).fetch(),
 	};
 }, App);

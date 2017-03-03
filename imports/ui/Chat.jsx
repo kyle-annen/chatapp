@@ -12,6 +12,7 @@ export default class Chat extends Component {
 			popSound: audio,
 			playSound: true,
 		}
+		this.getTimeStamp = this.getTimeStamp.bind(this);
 	}
 
 	componentDidUpdate() {
@@ -28,11 +29,9 @@ export default class Chat extends Component {
 				this.setState({ playSound: true })
 			}, 1000);
 		}
-			
 	}
 
-	render() {
-
+	getTimeStamp() {
 		const createDate = new Date(this.props.chat.createdAt);
 		const checkDate = new Date(this.props.chat.createdAt);
 		let timeStamp;
@@ -47,12 +46,17 @@ export default class Chat extends Component {
 			const year = createDate.getFullYear();
 			timeStamp = month + "/" + day + "/" + year;
 		}
+		return timeStamp;
+	}
 
+	render() {
+
+		
 		const author = this.props.chat.author;
 		const user = Meteor.users.findOne({_id: author});
 		const userImage = user.services.google.picture;
 		const userName = "  " + user.services.google.given_name;
-		
+		const timeStamp = this.getTimeStamp;
 		
 
 		return (
@@ -87,7 +91,6 @@ export default class Chat extends Component {
 					</div>
 				</ReactCSSTransitionGroup >
 			</div>
-
 		);
 	}
 }
