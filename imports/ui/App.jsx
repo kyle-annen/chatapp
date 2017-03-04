@@ -46,7 +46,8 @@ export default class App extends Component {
 
 			//clear chat box
 			ReactDOM.findDOMNode(this.refs.chatInput).value = '';
-			return false
+		
+			return false;
 		}
 	}
 

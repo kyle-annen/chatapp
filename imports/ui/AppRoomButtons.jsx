@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import FontAwesome from 'react-fontawesome';
 
 export default class AppRoomButtons extends React.Component {
 	constructor(props) {
@@ -18,10 +19,10 @@ export default class AppRoomButtons extends React.Component {
 	render() {
 
 		return(
-			<div>
-			<ButtonDropdown isOpen={this.state.dropDownOpen} toggle={() => this.toggle()}>
+			<div className="constainer-fluid">
+				<ButtonDropdown isOpen={this.state.dropDownOpen} toggle={() => this.toggle()}>
 					<DropdownToggle caret>
-					Rooms
+						<FontAwesome name="users" /> Rooms
 					</DropdownToggle>
 					<DropdownMenu>
 							{this.props.rooms.map((room)=> (
@@ -30,7 +31,7 @@ export default class AppRoomButtons extends React.Component {
 									onClick={(event) => {
 										this.props.selectRoom(room._id); this.toggle();
 									}}>
-									{room.room}
+									<FontAwesome name="hashtag" /> {room.room}
 								</DropdownItem>
 							))}
 					</DropdownMenu>

@@ -9,7 +9,10 @@ import {
   NavItem, 
   NavLink 
 } from 'reactstrap';
+import FontAwesome from 'react-fontawesome';
+
 import AccountsUIWrapper from './AccountsUIWrapper.jsx';
+
 
 export default class NavigationBar extends React.Component {
   constructor(props) {
@@ -35,7 +38,12 @@ export default class NavigationBar extends React.Component {
       <div>
         <Navbar color="faded" light toggleable>
           <NavbarToggler right onClick={this.toggle} />
-          <NavbarBrand href="/">chatApp</NavbarBrand>
+          <NavbarBrand href="/">
+            Double
+            <FontAwesome name="keyboard-o" size="2x" />
+            Bored
+            
+          </NavbarBrand>
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>

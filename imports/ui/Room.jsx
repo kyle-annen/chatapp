@@ -4,20 +4,51 @@ import { createContainer } from 'meteor/react-meteor-data';
 
 import { Chats } from '../api/chats.js';
 import { Rooms } from '../api/rooms.js';
+import FontAwesome from 'react-fontawesome';
 
 import Chat from './Chat.jsx';
 
 class ChatRoom extends React.Component {
+	constructor(props) {
+		super(props);
+		this.groupConsecutiveChatsByAuthor = this.groupConsecutiveChatsByAuthor.bind(this);
+	}
 
+	groupConsecutiveChatsByAuthor() {
+		const chats = this.props.chats;
+		let newChats = [];
+		let tempChat = "";
+		console.log(chats.length );
+		for (i = 0; i < chats.length; i++) {
+			console.log("Loop: " + i);
+			if (tempChat == "") {
+				tempChat = chats[i];
+				tempChat.text = [tempChat.text];
+				console.log(tempChat);
+			} else if (chats[i-1].author !== chats[i].author || i == chats.length - 1) {
+				newChats.push(tempChat);
+				console.log("Chats Length: " + newChats.length );
+				tempChat = "";
+			} else if (chats[i-1].author == chats[i].author) {
+				tempChat.text.push(chats[i].text);
+				console.log(tempChat);
+			}
+		}
+		console.log(JSON.stringify(newChats));
+		return newChats;
+
+	}
 
 	render() {
 		const roomName = this.props.roomName[0] ? 
-			this.props.roomName[0].room : "";
+			<span><FontAwesome name="hashtag"/>{this.props.roomName[0].room}</span> : 
+			"Please select a room.";
+		const chats = this.groupConsecutiveChatsByAuthor();
 		return(
-			<div>
+			<div className="container">
 				<h3>{roomName}</h3>
 				<div className="jumbotron" id="chat-jumbo">
-					{this.props.chats.map((chat) => (
+					{chats.map((chat) => (
 							<Chat key={chat._id} chat={chat} />
 						))
 					}
