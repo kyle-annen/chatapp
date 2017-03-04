@@ -14,13 +14,14 @@ class ChatRoom extends React.Component {
 		const roomName = this.props.roomName[0] ? 
 			this.props.roomName[0].room : "";
 		return(
-			<div className="jumbotron" id="chat-jumbo">
+			<div>
 				<h3>{roomName}</h3>
-				{this.props.chats.map((chat) => (
-						<Chat key={chat._id} chat={chat} />
-					))
-				}
-
+				<div className="jumbotron" id="chat-jumbo">
+					{this.props.chats.map((chat) => (
+							<Chat key={chat._id} chat={chat} />
+						))
+					}
+				</div>
 			</div>
 		)
 	}

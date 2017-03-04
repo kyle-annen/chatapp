@@ -132,6 +132,6 @@ export default createContainer(() => {
 	}
 
 	return {
-		rooms: Rooms.find( { users: userID } ).fetch(),
+		rooms: Rooms.find( { users: userID }, {sort: {room: 1}}).fetch(),
 	};
 }, App);

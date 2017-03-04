@@ -1,42 +1,40 @@
 import React, { Component } from 'react';
-import { Button, Collapse } from 'reactstrap';
+import { Button, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 
 export default class AppRoomButtons extends React.Component {
 	constructor(props) {
 		super(props);
 		this.toggle = this.toggle.bind(this);
 		this.state = {
-			collapse: false,
+			dropDownOpen: false,
 		};
 	}
 
 	toggle(){
 		this.setState({
-			collapse: !this.state.collapse,
+			dropDownOpen: !this.state.dropDownOpen,
 		})
 	}
 	render() {
+
 		return(
 			<div>
-				<Button 
-					color="primary"
-					onClick={this.toggle}
-					style={{marginBottom: '1em'}}>
-					Select Room
-				</Button>
-				<div className="container">
-					<Collapse isOpen={this.state.collapse}>
-						{this.props.rooms.map((room, i)=> (
-							<Button 
-								key={room._id} 
-								onClick={(event) => {
-									this.props.selectRoom(room._id); this.toggle();
-								}}>
-								{room.room}
-							</Button>
-						))}
-					</Collapse>
-				</div>
+			<ButtonDropdown isOpen={this.state.dropDownOpen} toggle={() => this.toggle()}>
+					<DropdownToggle caret>
+					Rooms
+					</DropdownToggle>
+					<DropdownMenu>
+							{this.props.rooms.map((room)=> (
+								<DropdownItem 
+									key={room._id} 
+									onClick={(event) => {
+										this.props.selectRoom(room._id); this.toggle();
+									}}>
+									{room.room}
+								</DropdownItem>
+							))}
+					</DropdownMenu>
+				</ButtonDropdown>
 			</div>
 		)
 	}
