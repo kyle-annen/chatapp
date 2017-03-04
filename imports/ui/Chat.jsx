@@ -56,8 +56,7 @@ export default class Chat extends Component {
 		const user = Meteor.users.findOne({_id: author});
 		const userImage = user.services.google.picture;
 		const userName = "  " + user.services.google.given_name;
-		const timeStamp = this.getTimeStamp;
-		
+		const timeStamp = this.getTimeStamp();
 
 		return (
 			<div>

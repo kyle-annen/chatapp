@@ -8,9 +8,10 @@ import { createContainer } from 'meteor/react-meteor-data';
 import { Chats } from '../api/chats.js';
 import { Rooms } from '../api/rooms.js';
 
-import RoomContainer from './Room.jsx';
+import Room from './Room.jsx';
 import NavigationBar from './NavigationBar.jsx';
 import AddRoomModal from './AddRoomModal.jsx';
+import AppRoomButtons from './AppRoomButtons.jsx';
 
 export default class App extends Component {
 	constructor(props) {
@@ -18,7 +19,7 @@ export default class App extends Component {
 		this.state = {
 			loggedIn: false,
 			roomModal: false,
-			activeRoom: "ZNesGD6vpAPnk4c2A"
+			activeRoom: ""
 		}
 		this.handleSubmit = this.handleSubmit.bind(this);
     this.toggleRoomModal = this.toggleRoomModal.bind(this);
@@ -79,7 +80,7 @@ export default class App extends Component {
 			activeRoom: roomID,
 		});
 	}
-	
+
 
 	render() {
 		return (
@@ -91,17 +92,11 @@ export default class App extends Component {
 					toggleRoomModal={this.toggleRoomModal} 
 					createRoom={this.createRoom}/>
 
-				{
-					this.props.rooms.map((room)=> (
-						<Button 
-							key={room._id} 
-							onClick={() => this.selectRoom(room._id)}>
-							{room.room}
-						</Button>
-					))
-				}
+				<AppRoomButtons 
+					selectRoom={this.selectRoom}
+					rooms={this.props.rooms}/>
 
-				<RoomContainer activeRoom={this.state.activeRoom} />	
+				<Room activeRoom={this.state.activeRoom} />	
 
 				
 				<form>
