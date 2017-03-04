@@ -19,7 +19,7 @@ export default class AppRoomButtons extends React.Component {
 	render() {
 
 		return(
-			<div className="constainer-fluid">
+			<div className="constainer">
 				<ButtonDropdown isOpen={this.state.dropDownOpen} toggle={() => this.toggle()}>
 					<DropdownToggle caret>
 						<FontAwesome name="users" /> Rooms
@@ -36,6 +36,12 @@ export default class AppRoomButtons extends React.Component {
 							))}
 					</DropdownMenu>
 				</ButtonDropdown>
+			 <Button
+        color="secondary"
+        onClick={this.props.toggleRoomModal}
+        className="float-right">
+          Create Room
+        </Button>
 			</div>
 		)
 	}

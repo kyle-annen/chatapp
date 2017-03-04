@@ -47,14 +47,6 @@ export default class NavigationBar extends React.Component {
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <Button
-                  color="link"
-                  onClick={this.props.toggleRoomModal}
-                  >
-                  Create Room
-                </Button>
-              </NavItem>
-              <NavItem>
               	<AccountsUIWrapper 
               		className="account-indicator"
               	/>

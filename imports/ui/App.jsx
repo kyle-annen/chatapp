@@ -86,8 +86,7 @@ export default class App extends Component {
 	render() {
 		return (
 			<div className="container-fluid">
-				<NavigationBar 
-					toggleRoomModal={this.toggleRoomModal} />
+				<NavigationBar />
 				<AddRoomModal 
 					roomModal={this.state.roomModal} 
 					toggleRoomModal={this.toggleRoomModal} 
@@ -95,25 +94,28 @@ export default class App extends Component {
 
 				<AppRoomButtons 
 					selectRoom={this.selectRoom}
-					rooms={this.props.rooms}/>
+					rooms={this.props.rooms}
+					toggleRoomModal={this.toggleRoomModal} />
 
 				<Room activeRoom={this.state.activeRoom} />	
 
-				
-				<form>
-					<div className="form-group">
-						<label for="chat-input">
-							Chat
-						</label>
-						<input 
-							className="form-control"
-							id="chat-input"
-							ref="chatInput"
-							rows="3"
-							onKeyDown={this.handleSubmit}>
-						</input>
-					</div>
-				</form>
+				<div className="container">
+					<form>
+						<div className="form-group">
+							<label for="chat-input">
+								Chat
+							</label>
+							<input 
+								className="form-control"
+								id="chat-input"
+								ref="chatInput"
+								rows="3"
+								onKeyDown={this.handleSubmit}
+								onKeyUp={this.handleSubmit}>
+							</input>
+						</div>
+					</form>
+				</div>
 			</div>
 		);
 	}

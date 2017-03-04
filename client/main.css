@@ -52,6 +52,10 @@
 	padding: 10px 15px;
  }
 
+ .collated-chat {
+ 	margin: 0px 10px;
+ }
+
 .chat-animation-enter {
   opacity: 0.01;
 }

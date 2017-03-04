@@ -85,7 +85,7 @@ export default class Chat extends Component {
 						<div className="col-sm-10">
 							<p className="chat-bubble">
 								{this.props.chat.text.map((line, idx) => (
-									<p key={idx}> { line } </p>
+									<p className="collated-chat" key={idx}> { line } </p>
 									))}
 							</p>
 						</div>
