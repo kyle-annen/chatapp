@@ -86,3 +86,7 @@
 .single-login-button {
 	background-color: white;
 }
+
+p {
+	word-break: break-all;
+}
