@@ -19,26 +19,31 @@ class ChatRoom extends React.Component {
 		let newChats = [];
 		let tempChat = "";
 		
-		// for (i = 0; i < chats.length; i++) {
-		// 	if (i == 0) {
-		// 		tempChat = chats[i];
-		// 		tempChat.text = [tempChat.text];
-		// 		if (i == chats.length - 1) {
-		// 			newChats.push(tempChat);
-		// 		}
-		// 	} else if (chats[i-1].author === chats[i].author) {
-		// 		tempChat.text.push(chats[i].text);
-		// 		if ( i == chats.length - 1 ) {
-		// 			newChats.push(tempChat);
-		// 			tempChat = chats[i];
-		// 			tempChat.text = [tempChat.text]; 
-		// 		}
-		// 	} else if (chats[i-1].author != chats[i].author || i == chats.length) {
-		// 		newChats.push(tempChat);
-		// 		tempChat = chats[i];
-		// 		tempChat.text = [tempChat.text];
-		// 	}
-		// }
+		for (var i = 0; i < chats.length; i++) {
+
+
+
+			//handle first chat scenario
+			if (i == 0) {
+				tempChat = chats[i];
+				tempChat.text = [tempChat.text];
+				if (i == chats.length - 1) {
+					newChats.push(tempChat);
+				}
+			} else if (tempChat.author == chats[i].author) {
+				tempChat.text.push(chats[i].text);
+				if (i == chats.length - 1) {
+					newChats.push(tempChat);
+				}
+			} else if (tempChat.author != chats[i].author) {
+				newChats.push(tempChat);
+				tempChat = chats[i];
+				tempChat.text = [tempChat.text];
+				if (i == chats.length - 1) {
+					newChats.push(tempChat);
+				}
+			}
+		}
 
 		return newChats;
 	}
