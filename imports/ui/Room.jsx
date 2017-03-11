@@ -18,25 +18,29 @@ class ChatRoom extends React.Component {
 		const chats = this.props.chats;
 		let newChats = [];
 		let tempChat = "";
-		console.log(chats.length );
-		for (i = 0; i < chats.length; i++) {
-			console.log("Loop: " + i);
-			if (tempChat == "") {
-				tempChat = chats[i];
-				tempChat.text = [tempChat.text];
-				console.log(tempChat);
-			} else if (chats[i-1].author !== chats[i].author || i == chats.length - 1) {
-				newChats.push(tempChat);
-				console.log("Chats Length: " + newChats.length );
-				tempChat = "";
-			} else if (chats[i-1].author == chats[i].author) {
-				tempChat.text.push(chats[i].text);
-				console.log(tempChat);
-			}
-		}
-		console.log(JSON.stringify(newChats));
-		return newChats;
+		
+		// for (i = 0; i < chats.length; i++) {
+		// 	if (i == 0) {
+		// 		tempChat = chats[i];
+		// 		tempChat.text = [tempChat.text];
+		// 		if (i == chats.length - 1) {
+		// 			newChats.push(tempChat);
+		// 		}
+		// 	} else if (chats[i-1].author === chats[i].author) {
+		// 		tempChat.text.push(chats[i].text);
+		// 		if ( i == chats.length - 1 ) {
+		// 			newChats.push(tempChat);
+		// 			tempChat = chats[i];
+		// 			tempChat.text = [tempChat.text]; 
+		// 		}
+		// 	} else if (chats[i-1].author != chats[i].author || i == chats.length) {
+		// 		newChats.push(tempChat);
+		// 		tempChat = chats[i];
+		// 		tempChat.text = [tempChat.text];
+		// 	}
+		// }
 
+		return newChats;
 	}
 
 	render() {
@@ -59,8 +63,6 @@ class ChatRoom extends React.Component {
 }
 
 export default Room = createContainer(({activeRoom}) => {
-
-
 	return {
 		chats: Chats.find( { room: activeRoom } ).fetch(),
 		roomName: Rooms.find({ _id: activeRoom}).fetch(),

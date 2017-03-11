@@ -13,6 +13,7 @@ export default class Chat extends Component {
 			playSound: true,
 		}
 		this.getTimeStamp = this.getTimeStamp.bind(this);
+		this.playSound = this.playSound.bind(this);
 	}
 
 	componentDidUpdate() {
@@ -21,14 +22,17 @@ export default class Chat extends Component {
 		//check to see if sound can play
 		if (this.state.playSound) {
 			//set the sound to not play again until timeout reached
-			this.setState({ playSound: false })
-			//play the pop sound
-			this.state.popSound.play();
+			this.playSound();
 			//rate limit the pop sound to one per second
-			setTimeout(function() {
-				this.setState({ playSound: true })
-			}, 1000);
+			setTimeout(this.playSound(), 10);
 		}
+	}
+
+	playSound() {
+		this.setState({
+			playSound: false,
+		});
+		this.state.popSound.play();
 	}
 
 	getTimeStamp() {

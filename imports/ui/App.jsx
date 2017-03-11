@@ -10,8 +10,9 @@ import { Rooms } from '../api/rooms.js';
 
 import Room from './Room.jsx';
 import NavigationBar from './NavigationBar.jsx';
-import AddRoomModal from './AddRoomModal.jsx';
+import AppRoomModal from './AppRoomModal.jsx';
 import AppRoomButtons from './AppRoomButtons.jsx';
+import AppSubModal from './AppSubModal.jsx';
 
 export default class App extends Component {
 	constructor(props) {
@@ -19,23 +20,26 @@ export default class App extends Component {
 		this.state = {
 			loggedIn: false,
 			roomModal: false,
+			subModal: false,
 			activeRoom: ""
 		}
 		this.handleSubmit = this.handleSubmit.bind(this);
     this.toggleRoomModal = this.toggleRoomModal.bind(this);
+    this.toggleSubModal = this.toggleSubModal.bind(this);
     this.createRoom = this.createRoom.bind(this);
+    this.subToRoom = this.subToRoom.bind(this);
     this.selectRoom = this.selectRoom.bind(this);
 	}
 
 	handleSubmit(event) {
-		if (event.keyCode == 13) {
+		const chatText = ReactDOM.findDOMNode(
+				this.refs.chatInput
+			).value;
+		if (event.keyCode == 13 && chatText != "") {
 			event.preventDefault();
 			const authorID = Meteor.user()._id;
 				//get the text from the chat box
-			const chatText = ReactDOM.findDOMNode(
-				this.refs.chatInput
-			).value;
-			console.log(chatText);
+			
 			//instert the chat into the MON
 			Chats.insert({
 				text: chatText,
@@ -46,7 +50,6 @@ export default class App extends Component {
 
 			//clear chat box
 			ReactDOM.findDOMNode(this.refs.chatInput).value = '';
-		
 			return false;
 		}
 	}
@@ -55,6 +58,12 @@ export default class App extends Component {
     this.setState({
       roomModal: !this.state.roomModal
     });
+  }
+
+  toggleSubModal(){
+  	this.setState({
+  		subModal: !this.state.subModal,
+  	});
   }
 
   createRoom() {
@@ -76,6 +85,20 @@ export default class App extends Component {
 		document.getElementById('room-input').value = '';
 	}
 
+	subToRoom(roomID) {
+		const rooms = this.props.rooms;
+		let users = [];
+		for (let i=0; i < rooms.length; i++) {
+			if (rooms[i]._id == roomID) {
+				users = rooms[i].users;
+			}
+		}
+		users.push(Meteor.user()._id);
+		Rooms.update(roomID, {
+			$set: { users: users },
+		});
+		this.toggleSubModal();
+	}
 	selectRoom(roomID) {
 		this.setState({
 			activeRoom: roomID,
@@ -87,15 +110,22 @@ export default class App extends Component {
 		return (
 			<div className="container-fluid">
 				<NavigationBar />
-				<AddRoomModal 
+				<AppRoomModal 
 					roomModal={this.state.roomModal} 
 					toggleRoomModal={this.toggleRoomModal} 
-					createRoom={this.createRoom}/>
+					createRoom={this.createRoom} />
+
+				<AppSubModal 
+					subModal={this.state.subModal}
+					toggleSubModal={this.toggleSubModal} 
+					allrooms={this.props.allrooms} 
+					subToRoom={this.subToRoom}/>
 
 				<AppRoomButtons 
 					selectRoom={this.selectRoom}
 					rooms={this.props.rooms}
-					toggleRoomModal={this.toggleRoomModal} />
+					toggleRoomModal={this.toggleRoomModal} 
+					toggleSubModal={this.toggleSubModal}/>
 
 				<Room activeRoom={this.state.activeRoom} />	
 
@@ -110,8 +140,8 @@ export default class App extends Component {
 								id="chat-input"
 								ref="chatInput"
 								rows="3"
-								onKeyDown={this.handleSubmit}
-								onKeyUp={this.handleSubmit}>
+								onKeyDown={this.handleSubmit}>
+								
 							</input>
 						</div>
 					</form>
@@ -123,6 +153,7 @@ export default class App extends Component {
 
 App.propTypes = {
 	rooms: PropTypes.array.isRequired,
+	allrooms: PropTypes.array.isRequired,
 };
 
 export default createContainer(() => {
@@ -136,5 +167,7 @@ export default createContainer(() => {
 
 	return {
 		rooms: Rooms.find( { users: userID }, {sort: {room: 1}}).fetch(),
+		allrooms: Rooms.find({}).fetch(),
+
 	};
 }, App);

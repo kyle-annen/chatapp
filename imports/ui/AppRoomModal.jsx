@@ -10,7 +10,7 @@ import {
 } from 'reactstrap';
 import React from 'react';
 
-export default class AddRoomModal extends React.Component {
+export default class AppRoomModal extends React.Component {
 
 
   render() {
@@ -22,7 +22,7 @@ export default class AddRoomModal extends React.Component {
           className={this.props.className}>
           <ModalHeader 
             toggle={this.props.toggleRoomModal}>
-              New Subject
+              New Room
           </ModalHeader>
           <ModalBody>
             <InputGroup>

@@ -36,12 +36,16 @@ export default class AppRoomButtons extends React.Component {
 							))}
 					</DropdownMenu>
 				</ButtonDropdown>
-			 <Button
-        color="secondary"
-        onClick={this.props.toggleRoomModal}
-        className="float-right">
-          Create Room
-        </Button>
+			  <Button
+	        color="secondary"
+	        onClick={this.props.toggleRoomModal}>
+	          Create Room
+	      </Button>
+	      <Button
+	      	color="secondary"
+	      	onClick={this.props.toggleSubModal}>
+	      	Find a Room
+	      </Button>
 			</div>
 		)
 	}
