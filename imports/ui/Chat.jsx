@@ -14,18 +14,27 @@ export default class Chat extends Component {
 		}
 		this.getTimeStamp = this.getTimeStamp.bind(this);
 		this.playSound = this.playSound.bind(this);
+		this.scrollChatBottom = this.scrollChatBottom.bind(this);
 	}
 
 	componentDidUpdate() {
-		const chatbox = document.getElementById("chat-jumbo");
-		chatbox.scrollTop = chatbox.scrollTopMax;
+		this.scrollChatBottom();
 		//check to see if sound can play
 		if (this.state.playSound) {
 			//set the sound to not play again until timeout reached
 			this.playSound();
 			//rate limit the pop sound to one per second
-			setTimeout(this.playSound(), 10);
+			setTimeout(this.playSound(), 100);
 		}
+	}
+
+	componentDidMount() {
+		this.scrollChatBottom();
+	}
+
+	scrollChatBottom() {
+		const chatbox = document.getElementById("chat-jumbo");
+		chatbox.scrollTop = chatbox.scrollTopMax;
 	}
 
 	playSound() {

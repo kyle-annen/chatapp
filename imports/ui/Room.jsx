@@ -54,7 +54,7 @@ class ChatRoom extends React.Component {
 			"Please select a room.";
 		const chats = this.groupConsecutiveChatsByAuthor();
 		return(
-			<div className="container">
+			<div className="container chat-container">
 				<h3>{roomName}</h3>
 				<div className="jumbotron" id="chat-jumbo">
 					{chats.map((chat) => (
