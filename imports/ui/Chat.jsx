@@ -80,7 +80,7 @@ export default class Chat extends Component {
 		      transitionEnter={false}
 		      transitionLeave={false}>
 					<div className="row">
-						<div className="col-sm-6">
+						<div className="col-sm-2">
 							<span className="author-name">
 								<img
 									src={userImage}
@@ -88,20 +88,19 @@ export default class Chat extends Component {
 								{userName}
 							</span>
 						</div>
-						<div className="col-sm-6">
-							<div className="float-right author-name">
-								{timeStamp}
-							</div>
-						</div>
-					</div>
-					<div className="row chat-bubble-row">
-						<div className="col-sm-10">
+						<div className="col-sm-8">
 							<p className="chat-bubble">
 								{this.props.chat.text.map((line, idx) => (
 									<p className="collated-chat" key={idx}> { line } </p>
 									))}
 							</p>
 						</div>
+						<div className="col-sm-2">
+							<div className="float-right author-name">
+								{timeStamp}
+							</div>
+						</div>
+						
 					</div>
 				</ReactCSSTransitionGroup >
 			</div>

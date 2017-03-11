@@ -57,7 +57,8 @@
  }
 
  .collated-chat {
- 	margin: 0px 10px;
+ 	margin: 0px 0px;
+ 	font-size: 14px;
  }
 
 .chat-animation-enter {
