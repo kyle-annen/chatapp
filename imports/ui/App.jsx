@@ -24,61 +24,63 @@ class App extends Component {
 			activeRoom: ""
 		}
 		this.handleSubmit = this.handleSubmit.bind(this);
-    this.toggleRoomModal = this.toggleRoomModal.bind(this);
-    this.toggleSubModal = this.toggleSubModal.bind(this);
-    this.createRoom = this.createRoom.bind(this);
-    this.subToRoom = this.subToRoom.bind(this);
-    this.selectRoom = this.selectRoom.bind(this);
+		this.toggleRoomModal = this.toggleRoomModal.bind(this);
+		this.toggleSubModal = this.toggleSubModal.bind(this);	
+		this.createRoom = this.createRoom.bind(this);
+		this.subToRoom = this.subToRoom.bind(this);
+		this.selectRoom = this.selectRoom.bind(this);
 	}
 
 	handleSubmit(event) {
-		const chatText = ReactDOM.findDOMNode(
-				this.refs.chatInput
-			).value;
+		//get the value of the chat input
+		const chatText = ReactDOM.findDOMNode(this.refs.chatInput).value;
+		//if enter is pressed, start chat submission
 		if (event.keyCode == 13 && chatText != "") {
+			//prevent page reload
 			event.preventDefault();
+			//get the author using meteor user method
 			const authorID = Meteor.user()._id;
-				//get the text from the chat box
-			
-			//instert the chat into the MON
+			//insert the chat into the collection
 			Chats.insert({
 				text: chatText,
 				author: authorID,
 				room: this.state.activeRoom,
 				createdAt: new Date(),
 			});
-
+			//<-----------begin update alters loop-------------->
+			//set the alias for allrooms prop
 			const rooms = this.props.allrooms;
-
+			//initialize variables to store values for users and alerts
 			let alerts = {};
 			let users = [];
-
-			rooms.forEach(function(room) {
-				if(room._id == this.activeRoom) {
-					alerts = room.alerts;
-					users = room.users;
+			//loop through rooms to get appropriate alerts and users before update
+			for (let i = 0; i < rooms.length; i++) {
+				if(rooms[i]._id == this.state.activeRoom) {
+					alerts = rooms[i].alerts;
+					users = rooms[i].users;
 				}
-			});
-
+			}
+			//loop through users to check if already in alerts (based on subscription)
+			//if user not in alerts, add to alerts
 			for (var i = users.length - 1; i >= 0; i--) {
 				if ( !(users[i] in alerts) ) {
-					alerts.users[i] = 0;
+					alerts[users[i]] = 0;
 				}
 			}
-
+			//loop through alerts and increment
 			for ( var key in alerts ) {
 				if (alerts.hasOwnProperty(key)) {
-					alerts.key += 1;
+					alerts[key] = alerts[key] + 1;		
 				}
 			}
-
+			//update the alerts in Rooms collection
 			Rooms.update(this.activeRoom, {
 				$set: { alerts: alerts },
 			});
 
-
 			//clear chat box
 			ReactDOM.findDOMNode(this.refs.chatInput).value = '';
+			//prevent page reload
 			return false;
 		}
 	}

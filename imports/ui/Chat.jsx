@@ -7,25 +7,13 @@ export default class Chat extends Component {
 	
 	constructor(props) {
 		super(props);
-		const audio = new Audio('https://www.freesound.org/people/HerbertBoland/sounds/33369/download/33369__herbertboland__mouthpop.wav');
-		this.state = {
-			popSound: audio,
-			playSound: true,
-		}
 		this.getTimeStamp = this.getTimeStamp.bind(this);
-		this.playSound = this.playSound.bind(this);
 		this.scrollChatBottom = this.scrollChatBottom.bind(this);
 	}
 
 	componentDidUpdate() {
 		this.scrollChatBottom();
 		//check to see if sound can play
-		if (this.state.playSound) {
-			//set the sound to not play again until timeout reached
-			this.playSound();
-			//rate limit the pop sound to one per second
-			setTimeout(this.playSound(), 100);
-		}
 	}
 
 	componentDidMount() {
@@ -35,13 +23,6 @@ export default class Chat extends Component {
 	scrollChatBottom() {
 		const chatbox = document.getElementById("chat-jumbo");
 		chatbox.scrollTop = chatbox.scrollTopMax;
-	}
-
-	playSound() {
-		this.setState({
-			playSound: false,
-		});
-		this.state.popSound.play();
 	}
 
 	getTimeStamp() {
