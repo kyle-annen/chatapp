@@ -14,7 +14,7 @@ import AppRoomModal from './AppRoomModal.jsx';
 import AppRoomButtons from './AppRoomButtons.jsx';
 import AppSubModal from './AppSubModal.jsx';
 
-export default class App extends Component {
+class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -48,6 +48,35 @@ export default class App extends Component {
 				createdAt: new Date(),
 			});
 
+			const rooms = this.props.allrooms;
+
+			let alerts = {};
+			let users = [];
+
+			rooms.forEach(function(room) {
+				if(room._id == this.activeRoom) {
+					alerts = room.alerts;
+					users = room.users;
+				}
+			});
+
+			for (var i = users.length - 1; i >= 0; i--) {
+				if ( !(users[i] in alerts) ) {
+					alerts.users[i] = 0;
+				}
+			}
+
+			for ( var key in alerts ) {
+				if (alerts.hasOwnProperty(key)) {
+					alerts.key += 1;
+				}
+			}
+
+			Rooms.update(this.activeRoom, {
+				$set: { alerts: alerts },
+			});
+
+
 			//clear chat box
 			ReactDOM.findDOMNode(this.refs.chatInput).value = '';
 			return false;
@@ -73,8 +102,8 @@ export default class App extends Component {
 		//add the room
 		Rooms.insert({
 			room: roomName,
-			author: userID,
-			users: [userID]
+			users: [userID],
+			alerts: {}
 		});
 
 		this.setState({
@@ -86,16 +115,26 @@ export default class App extends Component {
 	}
 
 	subToRoom(roomID) {
-		const rooms = this.props.rooms;
+		const rooms = this.props.allrooms;
 		let users = [];
-		for (let i=0; i < rooms.length; i++) {
-			if (rooms[i]._id == roomID) {
-				users = rooms[i].users;
+
+		rooms.forEach(function(room) {
+			if(room._id == roomID) {
+				users = room.users;
 			}
-		}
+		})
+
 		users.push(Meteor.user()._id);
+		let newUsers = [];
+
+		users.forEach(function(name) {
+			if (!newUsers.includes(name)) {
+				newUsers.push(name);
+			}
+		})
+
 		Rooms.update(roomID, {
-			$set: { users: users },
+			$set: { users: newUsers },
 		});
 		this.toggleSubModal();
 	}
