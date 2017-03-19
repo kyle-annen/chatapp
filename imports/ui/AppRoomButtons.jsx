@@ -7,6 +7,7 @@ export default class AppRoomButtons extends React.Component {
 	constructor(props) {
 		super(props);
 		this.toggle = this.toggle.bind(this);
+		this.getTotalAlerts = this.getTotalAlerts.bind(this);
 		this.state = {
 			dropDownOpen: false,
 		};
@@ -17,13 +18,45 @@ export default class AppRoomButtons extends React.Component {
 			dropDownOpen: !this.state.dropDownOpen,
 		})
 	}
+
+	getTotalAlerts(){
+		let sum = 0;
+		let alertJSX;
+
+
+		this.props.rooms.forEach(function(room){
+			for (var key in room.alerts ) {
+				if (key == Meteor.user()._id) {
+					sum += room.alerts[key];
+					console.log("loop");
+					console.log(sum);
+				}
+			}
+		});
+
+		if (sum > 0) {
+			alertJSX = <span className='rooms-alert-bubble'>{sum}</span>;
+		} else {
+			alertJSX = "";
+		}
+
+		return alertJSX;
+	}
+
+
+
 	render() {
+		const totalAlerts = this.getTotalAlerts(); 
+
 
 		return(
 			<div className="constainer">
 				<ButtonDropdown isOpen={this.state.dropDownOpen} toggle={() => this.toggle()}>
 					<DropdownToggle caret>
-						<FontAwesome name="users" /> Rooms
+						{totalAlerts}
+						<FontAwesome name="users" /> 
+						Rooms 
+						
 					</DropdownToggle>
 					<DropdownMenu>
 							{this.props.rooms.map((room)=> (

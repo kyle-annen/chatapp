@@ -95,3 +95,31 @@
 p {
 	word-break: break-all;
 }
+
+.alert-bubble {
+	border-radius: 100%;
+	background-color: red;
+	float: right;
+	display: inline-block;
+	height: 18px;
+	width: 18px;
+	padding-left: 6px;
+	color: white;
+	font-size: 12px;
+	font-weight: bolder;
+	margin-top: -20px;
+}
+
+.rooms-alert-bubble {
+	border-radius: 100%;
+	background-color: red;
+	float: right;
+	display: inline-block;
+	height: 18px;
+	width: 18px;
+	color: white;
+	font-size: 13px;
+	font-weight: bolder;
+	margin-left: 5px;
+	margin-top: 2px;
+}

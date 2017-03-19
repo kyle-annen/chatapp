@@ -142,11 +142,14 @@ class App extends Component {
 		});
 		this.toggleSubModal();
 	}
+
 	selectRoom(roomID) {
 		this.setState({
 			activeRoom: roomID,
 		});
 	}
+
+
 
 
 	render() {
