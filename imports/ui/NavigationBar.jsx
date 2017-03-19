@@ -20,7 +20,6 @@ export default class NavigationBar extends React.Component {
 
     this.state = {
       isOpen: false,
-      
     };
     this.toggle = this.toggle.bind(this);
   }

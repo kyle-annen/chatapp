@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Button, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import FontAwesome from 'react-fontawesome';
+import AppRoomButtonsAlerts from './AppRoomButtonsAlerts.jsx';
 
 export default class AppRoomButtons extends React.Component {
 	constructor(props) {
@@ -31,7 +32,8 @@ export default class AppRoomButtons extends React.Component {
 									onClick={(event) => {
 										this.props.selectRoom(room._id); this.toggle();
 									}}>
-									<FontAwesome name="hashtag" /> {room.room}
+									<FontAwesome name="hashtag" /> {room.room} 
+									<AppRoomButtonsAlerts room={room} />
 								</DropdownItem>
 							))}
 					</DropdownMenu>

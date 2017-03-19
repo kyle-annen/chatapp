@@ -17,12 +17,14 @@ import AppSubModal from './AppSubModal.jsx';
 class App extends Component {
 	constructor(props) {
 		super(props);
+		//set the initial state
 		this.state = {
 			loggedIn: false,
 			roomModal: false,
 			subModal: false,
 			activeRoom: ""
 		}
+		//bind all functions
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.toggleRoomModal = this.toggleRoomModal.bind(this);
 		this.toggleSubModal = this.toggleSubModal.bind(this);	
@@ -47,7 +49,7 @@ class App extends Component {
 				room: this.state.activeRoom,
 				createdAt: new Date(),
 			});
-			//<-----------begin update alters loop-------------->
+			//<-----------begin update alerts loop-------------->
 			//set the alias for allrooms prop
 			const rooms = this.props.allrooms;
 			//initialize variables to store values for users and alerts
@@ -67,14 +69,14 @@ class App extends Component {
 					alerts[users[i]] = 0;
 				}
 			}
-			//loop through alerts and increment
+			//loop through alerts and increment unseen count
 			for ( var key in alerts ) {
 				if (alerts.hasOwnProperty(key)) {
 					alerts[key] = alerts[key] + 1;		
 				}
 			}
 			//update the alerts in Rooms collection
-			Rooms.update(this.activeRoom, {
+			Rooms.update(this.state.activeRoom, {
 				$set: { alerts: alerts },
 			});
 
