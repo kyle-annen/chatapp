@@ -31,6 +31,7 @@ class App extends Component {
 		this.createRoom = this.createRoom.bind(this);
 		this.subToRoom = this.subToRoom.bind(this);
 		this.selectRoom = this.selectRoom.bind(this);
+		this.updateRoomAlertCount = this.updateRoomAlertCount.bind(this);
 	}
 
 	handleSubmit(event) {
@@ -149,6 +150,26 @@ class App extends Component {
 		});
 	}
 
+	updateRoomAlertCount() {
+		const rooms = this.props.rooms;
+		let alerts = {};
+		//loop through rooms to get appropriate alerts and users before update
+		for (let i = 0; i < rooms.length; i++) {
+			if(rooms[i]._id == this.state.activeRoom) {
+				alerts = rooms[i].alerts;
+			}
+		}
+
+		for (var key in alerts) {
+			if (key == Meteor.user()._id ) {
+				alerts[key] = 0;
+			}
+		}
+
+		Rooms.update(this.state.activeRoom, {
+			$set: { alerts: alerts },
+		});
+	}
 
 
 
@@ -173,7 +194,9 @@ class App extends Component {
 					toggleRoomModal={this.toggleRoomModal} 
 					toggleSubModal={this.toggleSubModal}/>
 
-				<Room activeRoom={this.state.activeRoom} />	
+				<Room 
+					activeRoom={this.state.activeRoom} 
+					updateRoomAlertCount={this.updateRoomAlertCount} />	
 
 				<div className="container">
 					<form>

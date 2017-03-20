@@ -18,11 +18,7 @@ class ChatRoom extends React.Component {
 		const chats = this.props.chats;
 		let newChats = [];
 		let tempChat = "";
-		
 		for (var i = 0; i < chats.length; i++) {
-
-
-
 			//handle first chat scenario
 			if (i == 0) {
 				tempChat = chats[i];
@@ -44,8 +40,11 @@ class ChatRoom extends React.Component {
 				}
 			}
 		}
-
 		return newChats;
+	}
+
+	componentDidUpdate(prevProps, prevState) {
+		this.props.updateRoomAlertCount();
 	}
 
 	render() {
