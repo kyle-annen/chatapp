@@ -89,15 +89,15 @@ class App extends Component {
 	}
 
 	toggleRoomModal() {
-    this.setState({
-      roomModal: !this.state.roomModal
-    });
+		this.setState({
+		  roomModal: !this.state.roomModal
+		});
   }
 
   toggleSubModal(){
-  	this.setState({
-  		subModal: !this.state.subModal,
-  	});
+	this.setState({
+		subModal: !this.state.subModal,
+	});
   }
 
   createRoom() {
@@ -140,9 +140,9 @@ class App extends Component {
 
 		Rooms.update(roomID, {
 			$set: { users: newUsers },
-		});
-		this.toggleSubModal();
-	}
+			});
+			this.toggleSubModal();
+		}
 
 	selectRoom(roomID) {
 		this.setState({
@@ -151,29 +151,37 @@ class App extends Component {
 	}
 
 	updateRoomAlertCount() {
-		const rooms = this.props.rooms;
-		let alerts = {};
-		//loop through rooms to get appropriate alerts and users before update
-		for (let i = 0; i < rooms.length; i++) {
-			if(rooms[i]._id == this.state.activeRoom) {
-				alerts = rooms[i].alerts;
+		if (this.state.activeRoom != "") {
+			const rooms = this.props.rooms;
+			let alerts = {};
+			let updateRoom;
+			//loop through rooms to get appropriate alerts and users before update
+			for (let i = 0; i < rooms.length; i++) {
+				if(rooms[i]._id == this.state.activeRoom) {
+					alerts = rooms[i].alerts;
+					updateRoom = rooms[i]._id;
+				}
 			}
-		}
 
-		for (var key in alerts) {
-			if (key == Meteor.user()._id ) {
-				alerts[key] = 0;
-			}
-		}
+			if (updateRoom === this.state.activeRoom) {
+				for (var key in alerts) {
+					if (key == Meteor.user()._id ) {
+						alerts[key] = 0;
+					}
+				}
 
-		Rooms.update(this.state.activeRoom, {
-			$set: { alerts: alerts },
-		});
-	}
+				Rooms.update(this.state.activeRoom, {
+					$set: { alerts: alerts },
+				});
+			}				
+		}
+	 }
 
 
 
 	render() {
+		const inputFieldBoolean = this.state.activeRoom == "" ? true : false;
+
 		return (
 			<div className="container-fluid">
 				<NavigationBar />
@@ -209,7 +217,8 @@ class App extends Component {
 								id="chat-input"
 								ref="chatInput"
 								rows="3"
-								onKeyDown={this.handleSubmit}>
+								onKeyDown={this.handleSubmit}
+								disabled={inputFieldBoolean}>
 								
 							</input>
 						</div>
