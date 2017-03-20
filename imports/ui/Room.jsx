@@ -84,6 +84,6 @@ class ChatRoom extends React.Component {
 export default Room = createContainer(({activeRoom}) => {
 	return {
 		chats: Chats.find( { room: activeRoom } ).fetch(),
-		roomName: Rooms.find({ _id: activeRoom}).fetch(),
+		roomName: Rooms.find( { _id: activeRoom} ).fetch(),
 	};
 }, ChatRoom);
