@@ -23,7 +23,6 @@ export default class AppRoomButtons extends React.Component {
 		let sum = 0;
 		let alertJSX;
 
-
 		this.props.rooms.forEach(function(room){
 			for (var key in room.alerts ) {
 				if (key == Meteor.user()._id) {
@@ -47,7 +46,6 @@ export default class AppRoomButtons extends React.Component {
 
 	render() {
 		const totalAlerts = this.getTotalAlerts(); 
-
 
 		return(
 			<div className="constainer">

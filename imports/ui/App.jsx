@@ -180,7 +180,8 @@ class App extends Component {
 
 
 	render() {
-		const inputFieldBoolean = this.state.activeRoom == "" ? true : false;
+		const inputFieldDisabled = this.state.activeRoom == "" ? true : false;
+		const loginPrompt = inputFieldDisabled ? <span>Please Login or Choose a Room</span> : "";
 
 		return (
 			<div className="container-fluid">
@@ -201,10 +202,13 @@ class App extends Component {
 					rooms={this.props.rooms}
 					toggleRoomModal={this.toggleRoomModal} 
 					toggleSubModal={this.toggleSubModal}/>
-
+				<h2 className="login-warning">{loginPrompt}</h2>
 				<Room 
 					activeRoom={this.state.activeRoom} 
-					updateRoomAlertCount={this.updateRoomAlertCount} />	
+					updateRoomAlertCount={this.updateRoomAlertCount} 
+					selectRoom={this.selectRoom} />
+
+
 
 				<div className="container">
 					<form>
@@ -218,7 +222,7 @@ class App extends Component {
 								ref="chatInput"
 								rows="3"
 								onKeyDown={this.handleSubmit}
-								disabled={inputFieldBoolean}>
+								disabled={inputFieldDisabled}>
 								
 							</input>
 						</div>

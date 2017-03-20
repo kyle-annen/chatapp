@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
+import { Button } from 'reactstrap';
 
 import { Chats } from '../api/chats.js';
 import { Rooms } from '../api/rooms.js';
@@ -52,9 +53,23 @@ class ChatRoom extends React.Component {
 			<span><FontAwesome name="hashtag"/>{this.props.roomName[0].room}</span> : 
 			"Please select a room.";
 		const chats = this.groupConsecutiveChatsByAuthor();
+		
+
 		return(
 			<div className="container chat-container">
-				<h3>{roomName}</h3>
+				<div className="row">
+					<div className="col-md-8">
+						<h3>{roomName}</h3>
+					</div>
+					<div className="col-md-4">
+						<Button 
+							color="danger"
+							onClick={(event) => {this.props.selectRoom("")}} 
+							className="float-sm-right">
+							Leave Room
+						</Button>
+					</div>
+				</div>
 				<div className="jumbotron" id="chat-jumbo">
 					{chats.map((chat) => (
 							<Chat key={chat._id} chat={chat} />
