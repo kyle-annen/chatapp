@@ -3,6 +3,7 @@ import { Button, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } fr
 import FontAwesome from 'react-fontawesome';
 import AppRoomButtonsAlerts from './AppRoomButtonsAlerts.jsx';
 
+
 export default class AppRoomButtons extends React.Component {
 	constructor(props) {
 		super(props);

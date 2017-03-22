@@ -4,7 +4,6 @@ import { Meteor } from 'meteor/meteor';
 import { Button } from 'reactstrap';
 import parseText from 'npm-text-parser';
 
-
 import { createContainer } from 'meteor/react-meteor-data';
 
 import { Chats } from '../api/chats.js';
@@ -15,6 +14,7 @@ import NavigationBar from './NavigationBar.jsx';
 import AppRoomModal from './AppRoomModal.jsx';
 import AppRoomButtons from './AppRoomButtons.jsx';
 import AppSubModal from './AppSubModal.jsx';
+import AppEmojiPicker from './AppEmojiPicker.jsx';
 
 class App extends Component {
 	constructor(props) {
@@ -209,7 +209,7 @@ class App extends Component {
 					updateRoomAlertCount={this.updateRoomAlertCount}  />
 
 
-
+				<AppEmojiPicker />
 				<div className="container">
 					<form>
 						<div className="form-group">
