@@ -202,11 +202,11 @@ class App extends Component {
 					selectRoom={this.selectRoom}
 					rooms={this.props.rooms}
 					toggleRoomModal={this.toggleRoomModal} 
-					toggleSubModal={this.toggleSubModal}/>
+					toggleSubModal={this.toggleSubModal}
+					activeRoom={this.state.activeRoom}/>
 				<Room 
 					activeRoom={this.state.activeRoom} 
-					updateRoomAlertCount={this.updateRoomAlertCount} 
-					selectRoom={this.selectRoom} />
+					updateRoomAlertCount={this.updateRoomAlertCount}  />
 
 
 

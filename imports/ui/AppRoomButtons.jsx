@@ -10,6 +10,7 @@ export default class AppRoomButtons extends React.Component {
 		this.getTotalAlerts = this.getTotalAlerts.bind(this);
 		this.state = {
 			dropDownOpen: false,
+			leaveRoomHidden: true
 		};
 	}
 
@@ -19,6 +20,7 @@ export default class AppRoomButtons extends React.Component {
 		})
 	}
 
+	//calculates the total number of alerts for a user
 	getTotalAlerts(){
 		let sum = 0;
 		let alertJSX;
@@ -38,8 +40,15 @@ export default class AppRoomButtons extends React.Component {
 		} else {
 			alertJSX = "";
 		}
-
 		return alertJSX;
+	}
+
+	componentWillUpdate() {
+		if(this.props.activeRoom == "" && !this.state.leaveRoomHidden) {
+			this.setState({ leaveRoomHidden: true })
+		} else if (this.props.activeRoom != "" && this.state.leaveRoomHidden) {
+			this.setState({ leaveRoomHidden: false })
+		}
 	}
 
 
@@ -67,6 +76,16 @@ export default class AppRoomButtons extends React.Component {
 									<AppRoomButtonsAlerts room={room} />
 								</DropdownItem>
 							))}
+							<DropdownItem>
+								<Button 
+									color="danger"
+									onClick={(event) => {this.props.selectRoom("")}} 
+									className="float-sm-right"
+									hidden={this.state.leaveRoomHidden}>
+									Leave Room
+								</Button>
+
+							</DropdownItem>
 					</DropdownMenu>
 				</ButtonDropdown>
 			  <Button

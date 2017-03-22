@@ -50,15 +50,7 @@ class ChatRoom extends React.Component {
 	componentDidUpdate(prevProps, prevState) {
 		this.props.updateRoomAlertCount();
 	}
-	componentDidReceiveProps() {
-			if (this.props.activeRoom == "") {
-			this.setState({ leaveRoomHidden: true })
-		} else {
-			this.setState({ leaveRoomHidden: false })
-		}
-	}
-
-
+	
 	render() {
 		const roomName = this.props.roomName[0] ? 
 			<span><FontAwesome name="hashtag"/>{this.props.roomName[0].room}</span> : 
@@ -73,13 +65,7 @@ class ChatRoom extends React.Component {
 						<h3>{roomName}</h3>
 					</div>
 					<div className="col-md-4">
-						<Button 
-							color="danger"
-							onClick={(event) => {this.props.selectRoom("")}} 
-							className="float-sm-right"
-							hidden={this.state.leaveRoomHidden}>
-							Leave Room
-						</Button>
+						
 					</div>
 				</div>
 				<div className="jumbotron" id="chat-jumbo">
