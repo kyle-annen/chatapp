@@ -13,6 +13,9 @@ class ChatRoom extends React.Component {
 	constructor(props) {
 		super(props);
 		this.groupConsecutiveChatsByAuthor = this.groupConsecutiveChatsByAuthor.bind(this);
+		this.state = {
+			leaveRoomHidden: true,	
+		}
 	}
 
 	groupConsecutiveChatsByAuthor() {
@@ -47,6 +50,14 @@ class ChatRoom extends React.Component {
 	componentDidUpdate(prevProps, prevState) {
 		this.props.updateRoomAlertCount();
 	}
+	componentDidReceiveProps() {
+			if (this.props.activeRoom == "") {
+			this.setState({ leaveRoomHidden: true })
+		} else {
+			this.setState({ leaveRoomHidden: false })
+		}
+	}
+
 
 	render() {
 		const roomName = this.props.roomName[0] ? 
@@ -65,7 +76,8 @@ class ChatRoom extends React.Component {
 						<Button 
 							color="danger"
 							onClick={(event) => {this.props.selectRoom("")}} 
-							className="float-sm-right">
+							className="float-sm-right"
+							hidden={this.state.leaveRoomHidden}>
 							Leave Room
 						</Button>
 					</div>

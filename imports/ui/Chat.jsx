@@ -70,11 +70,16 @@ export default class Chat extends Component {
 							</span>
 						</div>
 						<div className="col-sm-8">
-							<p className="chat-bubble">
+							<span className="chat-bubble">
 								{this.props.chat.text.map((line, idx) => (
-									<p className="collated-chat" key={idx}> { line } </p>
+									<p 
+										className="collated-chat" 
+										key={idx}
+										dangerouslySetInnerHTML={{__html: line}}>
+											
+									</p>
 									))}
-							</p>
+							</span>
 						</div>
 						<div className="col-sm-2">
 							<div className="float-right author-name">

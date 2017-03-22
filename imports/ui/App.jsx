@@ -2,6 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { Meteor } from 'meteor/meteor';
 import { Button } from 'reactstrap';
+import parseText from 'npm-text-parser';
+
 
 import { createContainer } from 'meteor/react-meteor-data';
 
@@ -36,7 +38,7 @@ class App extends Component {
 
 	handleSubmit(event) {
 		//get the value of the chat input
-		const chatText = ReactDOM.findDOMNode(this.refs.chatInput).value;
+		const chatText = parseText.parse(ReactDOM.findDOMNode(this.refs.chatInput).value);
 		//if enter is pressed, start chat submission
 		if (event.keyCode == 13 && chatText != "") {
 			//prevent page reload
@@ -181,7 +183,6 @@ class App extends Component {
 
 	render() {
 		const inputFieldDisabled = this.state.activeRoom == "" ? true : false;
-		const loginPrompt = inputFieldDisabled ? <span>Please Login or Choose a Room</span> : "";
 
 		return (
 			<div className="container-fluid">
@@ -202,7 +203,6 @@ class App extends Component {
 					rooms={this.props.rooms}
 					toggleRoomModal={this.toggleRoomModal} 
 					toggleSubModal={this.toggleSubModal}/>
-				<h2 className="login-warning">{loginPrompt}</h2>
 				<Room 
 					activeRoom={this.state.activeRoom} 
 					updateRoomAlertCount={this.updateRoomAlertCount} 
