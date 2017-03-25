@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Button, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import FontAwesome from 'react-fontawesome';
 import AppRoomButtonsAlerts from './AppRoomButtonsAlerts.jsx';

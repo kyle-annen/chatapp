@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import emoji from 'react-easy-emoji';
 
 import { Meteor } from 'meteor/meteor';
 
@@ -72,13 +73,10 @@ export default class Chat extends Component {
 						<div className="col-sm-8">
 							<span className="chat-bubble">
 								{this.props.chat.text.map((line, idx) => (
-									<p 
-										className="collated-chat" 
-										key={idx}
-										dangerouslySetInnerHTML={{__html: line}}>
-											
+									<p>
+										{emoji(line)}
 									</p>
-									))}
+								))}
 							</span>
 						</div>
 						<div className="col-sm-2">

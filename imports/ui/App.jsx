@@ -14,6 +14,7 @@ import NavigationBar from './NavigationBar.jsx';
 import AppRoomModal from './AppRoomModal.jsx';
 import AppRoomButtons from './AppRoomButtons.jsx';
 import AppSubModal from './AppSubModal.jsx';
+import AppEmojiPicker from './AppEmojiPicker.jsx';
 
 class App extends Component {
 	constructor(props) {
@@ -149,6 +150,7 @@ class App extends Component {
 		this.setState({
 			activeRoom: roomID,
 		});
+		console.log("New Room Selected: " + roomID);
 	}
 
 	updateRoomAlertCount() {
@@ -215,6 +217,7 @@ class App extends Component {
 							<label for="chat-input">
 								Chat
 							</label>
+							<AppEmojiPicker className="float-sm-right" />
 							<input 
 								className="form-control"
 								id="chat-input"
