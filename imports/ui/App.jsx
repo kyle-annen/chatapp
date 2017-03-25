@@ -34,6 +34,13 @@ class App extends Component {
 		this.subToRoom = this.subToRoom.bind(this);
 		this.selectRoom = this.selectRoom.bind(this);
 		this.updateRoomAlertCount = this.updateRoomAlertCount.bind(this);
+		this.handleEmoji = this.handleEmoji.bind(this);
+	}
+
+	handleEmoji(icon) {
+		const chatText = ReactDOM.findDOMNode(this.refs.chatInput).value;
+		const chatTextWithEmoji = chatText + icon;
+		ReactDOM.findDOMNode(this.refs.chatInput).value = chatTextWithEmoji;
 	}
 
 	handleSubmit(event) {
@@ -214,10 +221,10 @@ class App extends Component {
 				<div className="container">
 					<form>
 						<div className="form-group">
-							<label for="chat-input">
-								Chat
-							</label>
-							<AppEmojiPicker className="float-sm-right" />
+							<AppEmojiPicker
+								className="float-sm-right" 
+								handleEmoji={this.handleEmoji}/>
+						
 							<input 
 								className="form-control"
 								id="chat-input"

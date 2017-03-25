@@ -47,7 +47,7 @@ export default class AppEmojiPicker extends React.Component {
 		const emojiArray = this.getEmojis();
 		
 		return(
-		<div className="emoji-container">
+		<span className="emoji-container">
 			<div 
 				className="emoji-picker"
 				hidden={this.state.emojiPickerHidden}>
@@ -55,7 +55,10 @@ export default class AppEmojiPicker extends React.Component {
 					emojiArray.map((icon) => (
 						<div 
 							className="emoji-button"
-							onClick={() => {this.selectEmoji(icon)}}>
+							onClick={() => {
+								this.selectEmoji(icon);
+								this.props.handleEmoji(icon);
+							}}>
 							{emoji(icon)}
 						</div>
 					)) 
@@ -66,7 +69,7 @@ export default class AppEmojiPicker extends React.Component {
 				onClick={(event) => {this.openEmojiPicker(event);}} >
 				{emoji('😀')}
 			</Button>
-		</div>
+		</span>
 		)
 		
 	}
